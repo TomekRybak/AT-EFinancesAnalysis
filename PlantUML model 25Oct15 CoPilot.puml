@@ -1,0 +1,31 @@
+@startuml
+
+class MonthlyExpenseReport {
+    - year_month: str
+    - categories_df: DataFrame
+    - transactions_raw: DataFrame
+    - transactions_categorized: DataFrame
+    - monthly_subcategories_summary: DataFrame
+
+    + __init__(year_month: str)
+    + load_transactions_from_bank_records()
+    + normalize_dates()
+    + categorize_transactions(use_annotation: bool = False)
+    + populate_monthly_subcategories_summary(include_totals: bool = False)
+    + export_summary_to_excel(output_path: str)
+    + export_transactions_to_excel(output_path: str)
+    + categorize_transactions_and_generate_monthly_subcategories_summary(use_annotation: bool = True, include_totals: bool = False)
+}
+
+class MultiMonthExpenseWorkbook {
+    - monthly_reports: list[MonthlyExpenseReport]
+    - combined_summary_df: DataFrame
+
+    + __init__(reports: list[MonthlyExpenseReport])
+    + merge_monthly_summaries()
+    + export_combined_summary_to_excel(output_path: str)
+}
+
+MonthlyExpenseReport --> MultiMonthExpenseWorkbook : used in
+
+@enduml
