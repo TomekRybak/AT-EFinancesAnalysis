@@ -1,0 +1,31 @@
+@startuml
+
+class MonthlyExpenseReport {
+    - year_month: str
+    - categories_df: DataFrame
+    - transactions_raw: DataFrame
+    - transactions_categorized: DataFrame
+    - monthly_subcategories_summary: DataFrame
+
+    --
+    + __init__(year_month: str)
+    + load_transactions_from_bank_records()
+    + normalize_dates()
+    + categorize_transactions(use_annotation: bool, keep_annotations: bool)
+    + categorize_transactions_and_generate_monthly_subcategories_summary(use_annotation: bool, include_totals: bool)
+    + populate_monthly_subcategories_summary(include_totals: bool)
+    + export_summary_to_excel(output_path: str)
+    + export_categorized_transactions_to_excel(output_path: str)
+
+    --
+    - _build_subcategory_lookup()
+    - _normalize_annotation(annotation)
+    - _apply_annotation_override(annotation_clean, lookup)
+    - _apply_pattern_matching(description)
+    - _build_ordered_category_index()
+    - _group_expenses_by_category()
+    - _insert_category_totals(grouped_df)
+    - _format_transaction_dates(df)
+}
+
+@enduml
